@@ -4,7 +4,7 @@
 {% block content %}
     <h1>
       Driver List
-      <a href="{% url 'taxi:driver-create' %}" class="btn btn-primary link-to-page">
+      <a href="{% url 'neighborhood:user-create' %}" class="btn btn-primary link-to-page">
         Create
       </a>
     </h1>
@@ -21,15 +21,15 @@
         <th>Username</th>
         <th>First name</th>
         <th>Last name</th>
-        <th>License number</th>
+        <th>District</th>
       </tr>
-    {% for driver in driver_list %}
+    {% for user in user_list %}
       <tr>
-        <td>{{ driver.id }}</td>
-        <td><a href="{{ driver.get_absolute_url }}">{{ driver.username }} {% if user == driver %} (Me){% endif %}</a></td>
-        <td>{{ driver.first_name }}</td>
-        <td>{{ driver.last_name }}</td>
-        <td>{{ driver.license_number }}</td>
+        <td>{{ user.id }}</td>
+        <td><a href="{{ user.get_absolute_url }}">{{ user.username }} {% if user == user %} (Me){% endif %}</a></td>
+        <td>{{ user.first_name }}</td>
+        <td>{{ user.last_name }}</td>
+        <td>{{ user.districts }}</td>
       </tr>
     {% endfor %}
 

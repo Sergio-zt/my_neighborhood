@@ -2,6 +2,21 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from .models import District
+
+
+class UserCreationForm(UserCreationForm):
+    district = forms.ModelMultipleChoiceField(
+        queryset=District.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+    class Meta(UserCreationForm.Meta):
+        model = get_user_model()
+        fields = UserCreationForm.Meta.fields + (
+            "first_name",
+            "last_name",
+            "district",
+        )
 
 
 class UserSearchForm(forms.Form):

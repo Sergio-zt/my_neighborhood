@@ -15,6 +15,7 @@ from .models import (
 
 from .forms import (
     UserSearchForm,
+    UserCreationForm,
     DistrictSearchForm,
     PostSearchForm
 )
@@ -62,6 +63,12 @@ class UserListView(LoginRequiredMixin, generic.ListView):
                 username__icontains=form.cleaned_data["username"]
             )
         return queryset
+
+
+class UserCreateView(LoginRequiredMixin, generic.CreateView):
+    model = get_user_model()
+    form_class = UserCreationForm
+    success_url = reverse_lazy("neighborhood:user-list")
 
 
 class DistrictListView(LoginRequiredMixin, generic.ListView):
