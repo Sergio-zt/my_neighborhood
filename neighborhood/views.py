@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from .models import (
     District,
@@ -23,7 +24,7 @@ from .forms import (
 def index(request):
     """View function for the home page of the site."""
 
-    num_users = settings.AUTH_USER_MODEL.objects.count()
+    num_users = get_user_model().objects.count()
     num_districts = District.objects.count()
     num_posts = Post.objects.count()
 
@@ -40,7 +41,7 @@ def index(request):
     return render(request, "neighborhood/index.html", context=context)
 
 class UserListView(LoginRequiredMixin, generic.ListView):
-    model = settings.AUTH_USER_MODEL
+    model = get_user_model()
     paginate_by = 10
 
     def get_context_data(self, *, object_list=None, **kwargs):
