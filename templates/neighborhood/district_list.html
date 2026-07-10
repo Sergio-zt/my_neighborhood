@@ -20,6 +20,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>Neighbors</th>
+        <th>Membership</th>
         <th>Update</th>
         <th>Delete</th>
       </tr>
@@ -36,7 +37,25 @@
               {{ district.user_count }}
           </td>
           <td>
-              <a href="{% url 'neighborhood:district-update' pk=district.id %}">
+            <form action="{% url 'neighborhood:toggle-district-membership' pk=district.id %}" method="POST">
+              {% csrf_token %}
+              
+              <!-- Проверяем, есть ли текущий пользователь в списке пользователей этого района -->
+              {% if request.user in district.users.all %}
+                <!-- Если да, показываем кнопку отсоединиться -->
+                <button type="submit" class="btn btn-warning btn-sm">
+                  Leave
+                </button>
+              {% else %}
+                <!-- Если нет, показываем кнопку присоединиться -->
+                <button type="submit" class="btn btn-success btn-sm">
+                  Join
+                </button>
+              {% endif %}
+            </form>
+          </td>
+          <td>
+              <a href="{% url "neighborhood:district-update" pk=district.id %}">
                 Update
               </a>
             </td>
