@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.urls import reverse
 
 
 class District(models.Model):
@@ -11,11 +12,14 @@ class District(models.Model):
 
 
 class User(AbstractUser):
-    district = models.ManyToManyField(District, related_name='users', blank=True)
+    districts = models.ManyToManyField(District, related_name='users', blank=True)
 
     class Meta:
         verbose_name = "user"
         verbose_name_plural = "users"
+
+    def get_absolute_url(self):
+        return reverse("neighborhood:user-detail", kwargs={"pk": self.pk})
 
     def __str__(self) -> str:
         return f"{self.username} ({self.first_name} {self.last_name})"

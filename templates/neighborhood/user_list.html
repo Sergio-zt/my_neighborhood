@@ -3,7 +3,7 @@
 
 {% block content %}
     <h1>
-      Driver List
+      Neighbors List
       <a href="{% url 'neighborhood:user-create' %}" class="btn btn-primary link-to-page">
         Create
       </a>
@@ -14,27 +14,34 @@
       <input type="submit" value="🔍" class="btn btn-secondary">
     </form>
 
-    {% if driver_list %}
+    {% if user_list %}
     <table class="table">
       <tr>
         <th>ID</th>
         <th>Username</th>
         <th>First name</th>
         <th>Last name</th>
-        <th>District</th>
+        <th>Districts</th>
       </tr>
     {% for user in user_list %}
       <tr>
         <td>{{ user.id }}</td>
-        <td><a href="{{ user.get_absolute_url }}">{{ user.username }} {% if user == user %} (Me){% endif %}</a></td>
+        <td><a href="{{ user.get_absolute_url }}">{{ user.username }} {% if user == request.user %} (Me){% endif %}</a></td>
         <td>{{ user.first_name }}</td>
         <td>{{ user.last_name }}</td>
-        <td>{{ user.districts }}</td>
+        <td>
+          {% for district in user.districts.all %}
+            {{ district.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% empty %}
+              User not belong to any district
+          {% endfor %}
+        </td>
       </tr>
     {% endfor %}
 
     </table>
     {% else %}
-      <p>There are no drivers in the service.</p>
+      <p>There are no neighbors in the service.</p>
     {% endif %}
 {% endblock %}

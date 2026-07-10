@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Username: {{ user.username }}
+    <a href="{% url "neighborhood:user-delete" pk=user.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url "neighborhood:user-update" pk=user.id %}" class="btn btn-secondary link-to-page">
+      Update districts
+    </a>
+  </h1>
+
+  <p><strong>First name:</strong> {{ user.first_name }}</p>
+  <p><strong>Last name:</strong> {{ user.last_name }}</p>
+  <p><strong>Is staff:</strong> {{ driver.is_staff }}</p>
+
+  <div class="ml-3">
+    <h4>District</h4>
+
+    {% for district in user.districts.all %}
+        <hr>
+        <p><strong>Name:</strong> {{ district.name }}</p>
+        <p class="text-muted"><strong>Id:</strong> {{district.id}}</p>
+
+    {% empty %}
+      <p>No Districts!</p>
+    {% endfor %}
+  </div>
+{% endblock %}

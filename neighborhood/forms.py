@@ -6,7 +6,7 @@ from .models import District
 
 
 class UserCreationForm(UserCreationForm):
-    district = forms.ModelMultipleChoiceField(
+    districts = forms.ModelMultipleChoiceField(
         queryset=District.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
@@ -15,8 +15,18 @@ class UserCreationForm(UserCreationForm):
         fields = UserCreationForm.Meta.fields + (
             "first_name",
             "last_name",
-            "district",
+            "districts",
         )
+
+
+class UserUpdateForm(forms.ModelForm):
+    districts = forms.ModelMultipleChoiceField(
+        queryset=District.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+    class Meta():
+        model = get_user_model()
+        fields = ["districts"]
 
 
 class UserSearchForm(forms.Form):

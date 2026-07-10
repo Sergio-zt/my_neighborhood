@@ -2,18 +2,30 @@ from django.urls import path
 from .views import (
     index,
     UserListView,
+    UserDetailView,
     UserCreateView,
+    UserUpdeteView,
+    UserDeleteView,
     DistrictListView,
+    DistrictCreateView,
+    DistrictUpdateView,
+    DistrictDeleteView,
     PostListView,
 )
 
 
 urlpatterns = [
     path("", index, name="index"),
-    path("users/", UserListView.as_view(), name="user-list"),
-    path("districts/", DistrictListView.as_view(), name="district-list"),
-    path("posts/", PostListView.as_view(), name="post-list"),
+    path("user/", UserListView.as_view(), name="user-list"),
+    path("user/<int:pk>", UserDetailView.as_view(), name="user-detail"),
+    path("user/<int:pk>/update", UserUpdeteView.as_view(), name="user-update"),
+    path("user/<int:pk>/delete", UserDeleteView.as_view(), name="user-delete"),
     path("user/create", UserCreateView.as_view(), name="user-create"),
+    path("district/", DistrictListView.as_view(), name="district-list"),
+    path("district/create", DistrictCreateView.as_view(), name="district-create"),
+    path("district/<int:pk>/update", DistrictUpdateView.as_view(), name="district-update"),
+    path("district/<int:pk>/delete", DistrictDeleteView.as_view(), name="district-delete"),
+    path("posts/", PostListView.as_view(), name="post-list"),
 ]
 
 

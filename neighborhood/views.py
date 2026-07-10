@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -10,12 +11,12 @@ from django.contrib.auth import get_user_model
 from .models import (
     District,
     Post,
-    User,
 )
 
 from .forms import (
     UserSearchForm,
     UserCreationForm,
+    UserUpdateForm,
     DistrictSearchForm,
     PostSearchForm
 )
@@ -56,13 +57,29 @@ class UserListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().prefetch_related("districts")
         form = UserSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
                 username__icontains=form.cleaned_data["username"]
             )
         return queryset
+
+
+class UserDetailView(LoginRequiredMixin, generic.DetailView):
+    model = get_user_model()
+    
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related("districts")
+
+
+class UserUpdeteView(LoginRequiredMixin, generic.UpdateView):
+    model = get_user_model()
+    form_class = UserUpdateForm
+
+
+class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = get_user_model()
 
 
 class UserCreateView(LoginRequiredMixin, generic.CreateView):
@@ -86,11 +103,30 @@ class DistrictListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = District.objects.select_related("manufacturer")
+        queryset = District.objects.prefetch_related("users").annotate(
+            user_count=Count('users')
+        )
         form = DistrictSearchForm(self.request.GET)
         if form.is_valid():
-            return queryset.filter(model__icontains=form.cleaned_data["name"])
+            return queryset.filter(name__icontains=form.cleaned_data["name"])
         return queryset
+
+
+class DistrictCreateView(LoginRequiredMixin, generic.CreateView):
+    model = District
+    fields = "__all__"
+    success_url = reverse_lazy("neighborhood:district-list")
+
+
+class DistrictUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = District
+    fields = "__all__"
+    success_url = reverse_lazy("neighborhood:district-list")
+
+
+class DistrictDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = District
+    success_url = reverse_lazy("neighborhood:district-list")
 
 
 class PostListView(LoginRequiredMixin, generic.ListView):
