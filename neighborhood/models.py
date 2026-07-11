@@ -33,4 +33,5 @@ class Post(models.Model):
     )
     post_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+    title = models.CharField(max_length=255)
     text = models.TextField()

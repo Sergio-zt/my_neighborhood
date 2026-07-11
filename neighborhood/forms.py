@@ -26,7 +26,11 @@ class UserUpdateForm(forms.ModelForm):
     )
     class Meta():
         model = get_user_model()
-        fields = ["districts"]
+        fields = [
+            "first_name",
+            "last_name",
+            "districts"
+        ]
 
 
 class UserSearchForm(forms.Form):
@@ -64,3 +68,12 @@ class PostSearchForm(forms.Form):
             }
         )
     )
+
+
+class PostCreateForm(forms.Form):
+    class Meta(UserCreationForm.Meta):
+        model = get_user_model()
+        fields = UserCreationForm.Meta.fields + (
+            "title",
+            "text",
+        )

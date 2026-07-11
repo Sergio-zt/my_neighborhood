@@ -20,7 +20,8 @@ from .forms import (
     UserCreationForm,
     UserUpdateForm,
     DistrictSearchForm,
-    PostSearchForm
+    PostSearchForm,
+    PostCreateForm
 )
 
 
@@ -160,5 +161,16 @@ class PostListView(LoginRequiredMixin, generic.ListView):
         queryset = super().get_queryset()
         form = PostSearchForm(self.request.GET)
         if form.is_valid():
-            return queryset.filter(name__icontains=form.cleaned_data["text"])
+            return queryset.filter(text__icontains=form.cleaned_data["text"])
         return queryset
+
+
+class PostListDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Post
+
+    def get_queryset(self):
+        return super().get_queryset().select_related("user")
+
+
+class PostCreateView(LoginRequiredMixin, generic.CreateView):
+    form_class = PostCreateForm
