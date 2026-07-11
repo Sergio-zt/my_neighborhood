@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ post.title }}
+    {% if request.user == post.user %}
+    <a href="{% url 'neighborhood:post-delete' pk=post.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url 'neighborhood:post-update' pk=post.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+    {% endif %}
+  </h1>
+  <h4><b>Date:</b> {{ post.post_date }} <b>Author:</b> {{ post.user.username }}</h4>
+  <p>{{ post.text|safe }}</p>
+{% endblock %}

@@ -2,7 +2,10 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from .models import District
+from .models import(
+    District,
+    Post
+)
 
 
 class UserCreationForm(UserCreationForm):
@@ -70,10 +73,10 @@ class PostSearchForm(forms.Form):
     )
 
 
-class PostCreateForm(forms.Form):
-    class Meta(UserCreationForm.Meta):
-        model = get_user_model()
-        fields = UserCreationForm.Meta.fields + (
+class PostCreationForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = [
             "title",
-            "text",
-        )
+            "text"
+        ]

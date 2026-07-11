@@ -1,6 +1,5 @@
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -21,7 +20,7 @@ from .forms import (
     UserUpdateForm,
     DistrictSearchForm,
     PostSearchForm,
-    PostCreateForm
+    PostCreationForm
 )
 
 
@@ -158,7 +157,7 @@ class PostListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().select_related("user")
         form = PostSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(text__icontains=form.cleaned_data["text"])
@@ -173,4 +172,27 @@ class PostListDetailView(LoginRequiredMixin, generic.DetailView):
 
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
-    form_class = PostCreateForm
+    model = Post
+    form_class = PostCreationForm
+    success_url = reverse_lazy("neighborhood:post-list")
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user        
+        return super().form_valid(form)
+
+
+class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Post
+    success_url = reverse_lazy("neighborhood:post-list")
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
+
+class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Post
+    form_class = PostCreationForm
+    success_url = reverse_lazy("neighborhood:district-list")
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)

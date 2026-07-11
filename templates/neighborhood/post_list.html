@@ -13,14 +13,18 @@
       {{ search_form|crispy }}
       <input type="submit" value="🔍" class="btn btn-secondary">
   </form>
-
+  <br>
   {% if post_list %}
     <ul>
       {% for post in post_list %}
         <li>
-          <a href="{% url "neighborhood:post-detail" pk=post.id %} ">{{ post.text }}</a>
-          ({{ post.user.usernsme }})
+          <a href="{% url "neighborhood:post-detail" pk=post.id %} ">{{ post.title }}</a>
+          <b>Date:</b> {{ post.post_date }} <b>Author:</b> {{ post.user.username }}
         </li>
+        <p>
+          {{ post.text|truncatewords_html:15|safe }}
+        </p>
+        <hr>
       {% endfor %}
     </ul>
   {% else %}
