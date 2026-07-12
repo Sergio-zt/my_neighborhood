@@ -13,6 +13,15 @@
     </a>
     {% endif %}
   </h1>
-  <h4><b>Date:</b> {{ post.post_date }} <b>Author:</b> {{ post.user.username }}</h4>
+  <h4>
+    <b>Date:</b> {{ post.post_date }} <b>Author:</b> {{ post.user.username }}
+    <b>Districts:</b> 
+    {% for district in post.districts.all %}
+      {{ district.name }}
+      {% if not forloop.last %}, {% endif %}
+      {% empty %}
+        This post not belong to any district
+    {% endfor %}
+  </h4>
   <p>{{ post.text|safe }}</p>
 {% endblock %}

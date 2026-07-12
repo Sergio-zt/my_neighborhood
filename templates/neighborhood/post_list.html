@@ -20,6 +20,13 @@
         <li>
           <a href="{% url "neighborhood:post-detail" pk=post.id %} ">{{ post.title }}</a>
           <b>Date:</b> {{ post.post_date }} <b>Author:</b> {{ post.user.username }}
+          <b>Districts:</b>
+          {% for district in post.districts.all %}
+            {{ district.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% empty %}
+              This post not belong to any district
+          {% endfor %}
         </li>
         <p>
           {{ post.text|truncatewords_html:15|safe }}

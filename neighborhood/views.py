@@ -146,7 +146,7 @@ class DistrictDeleteView(LoginRequiredMixin, generic.DeleteView):
 class PostListView(LoginRequiredMixin, generic.ListView):
     model = Post
     paginate_by = 10
-    ordering = ["id"]
+    ordering = ["-id"]
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
@@ -159,18 +159,18 @@ class PostListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset().select_related("user")
+        queryset = super().get_queryset().select_related("user").prefetch_related("districts")
         form = PostSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(text__icontains=form.cleaned_data["text"])
         return queryset
 
 
-class PostListDetailView(LoginRequiredMixin, generic.DetailView):
+class PostDetailView(LoginRequiredMixin, generic.DetailView):
     model = Post
 
     def get_queryset(self):
-        return super().get_queryset().select_related("user")
+        return super().get_queryset().select_related("user").prefetch_related("districts")
 
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):

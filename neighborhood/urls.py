@@ -11,7 +11,7 @@ from .views import (
     DistrictUpdateView,
     DistrictDeleteView,
     PostListView,
-    PostListDetailView,
+    PostDetailView,
     PostCreateView,
     PostDeleteView,
     PostUpdateView
@@ -31,7 +31,7 @@ urlpatterns = [
     path("district/<int:pk>/delete", DistrictDeleteView.as_view(), name="district-delete"),
     path("districts/<int:pk>/toggle-membership/", DistrictListView.toggle_district_membership, name="toggle-district-membership"),
     path("post/", PostListView.as_view(), name="post-list"),
-    path("post/<int:pk>/", PostListDetailView.as_view(), name="post-detail"),
+    path("post/<int:pk>/", PostDetailView.as_view(), name="post-detail"),
     path("post/<int:pk>/delete", PostDeleteView.as_view(), name="post-delete"),
     path("post/<int:pk>/update", PostUpdateView.as_view(), name="post-update"),
     path("post/create/", PostCreateView.as_view(), name="post-create"),
