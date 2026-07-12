@@ -74,9 +74,16 @@ class PostSearchForm(forms.Form):
 
 
 class PostCreationForm(forms.ModelForm):
+    districts = forms.ModelMultipleChoiceField(
+        queryset=District.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+    
     class Meta:
         model = Post
         fields = [
+            "districts",
             "title",
             "text"
         ]

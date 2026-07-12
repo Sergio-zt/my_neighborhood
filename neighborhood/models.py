@@ -12,7 +12,11 @@ class District(models.Model):
 
 
 class User(AbstractUser):
-    districts = models.ManyToManyField(District, related_name='users', blank=True)
+    districts = models.ManyToManyField(
+        District,
+        related_name='users',
+        blank=True
+    )
 
     class Meta:
         verbose_name = "user"
@@ -29,9 +33,13 @@ class Post(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE,
-        related_name='posts'
+        related_name="posts"
     )
     post_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
     text = models.TextField()
+    districts = models.ManyToManyField(
+        District,
+        related_name="district_posts"
+    )

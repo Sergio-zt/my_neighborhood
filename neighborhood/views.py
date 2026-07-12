@@ -93,6 +93,7 @@ class UserCreateView(LoginRequiredMixin, generic.CreateView):
 class DistrictListView(LoginRequiredMixin, generic.ListView):
     model = District
     paginate_by = 10
+    ordering = ["name"]
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DistrictListView, self).get_context_data(**kwargs)
@@ -145,6 +146,7 @@ class DistrictDeleteView(LoginRequiredMixin, generic.DeleteView):
 class PostListView(LoginRequiredMixin, generic.ListView):
     model = Post
     paginate_by = 10
+    ordering = ["id"]
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
