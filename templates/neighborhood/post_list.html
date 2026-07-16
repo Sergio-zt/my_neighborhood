@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Post List {% endblock title %}
+
+{% block body_class %} post-list-page {% endblock body_class %}
+
+{% block content %}
+  {% include "includes/navigation.html" %}
+
+
+  <header class="header-2">
+    <div class="page-header section-height-50 relative" style="background-image: url('{% static "assets/img/curved-images/curved.jpg" %}')">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 text-center mx-auto">
+            <h1 class="text-white pt-3 mt-n5">Neighborhood News</h1>
+            <p class="lead text-white mt-3">Read the latest news, announcements, and updates from your neighbors.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="position-absolute w-100 z-index-1 bottom-0">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 40" preserveAspectRatio="none" shape-rendering="auto">
+          <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+          </defs>
+          <g class="moving-waves">
+            <use xlink:href="#gentle-wave" x="48" y="-1" fill="rgba(255,255,255,0.40)" />
+            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.35)" />
+            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.25)" />
+            <use xlink:href="#gentle-wave" x="48" y="8" fill="rgba(255,255,255,0.20)" />
+            <use xlink:href="#gentle-wave" x="48" y="13" fill="rgba(255,255,255,0.15)" />
+            <use xlink:href="#gentle-wave" x="48" y="16" fill="rgba(255,255,255,0.95)" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+
+  <section class="pt-3 pb-5">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-12 col-lg-10 z-index-2 mt-n10 mx-auto">
+          <div class="card blur shadow-blur">
+            
+
+            <div class="card-header bg-transparent pb-0 p-4 d-flex justify-content-between align-items-center flex-wrap">
+              <h5 class="mb-0">All Posts</h5>
+              <a href="{% url 'neighborhood:post-create' %}" class="btn bg-gradient-primary btn-sm mb-0 mt-2 mt-md-0">
+                + Create
+              </a>
+            </div>
+
+            <div class="card-body p-4 pt-2">
+              
+
+              <form method="GET" action="" class="row gx-3 gy-2 align-items-center mb-5">
+                <div class="col-md-9 col-lg-10">
+                  {{ search_form|crispy }}
+                </div>
+                <div class="col-md-3 col-lg-2">
+                  <button type="submit" class="btn btn-secondary w-100 mb-0 mt-md-0 mt-2">
+                    Search
+                  </button>
+                </div>
+              </form>
+
+
+              {% if post_list %}
+                <div class="post-feed">
+                  {% for post in post_list %}
+                    <div class="post-item mb-4">
+                      
+
+                      <a href="{% url 'neighborhood:post-detail' pk=post.id %}" class="text-dark">
+                        <h4 class="mb-1 text-primary">{{ post.title }}</h4>
+                      </a>
+                      
+
+                      <div class="d-flex align-items-center flex-wrap text-sm text-secondary mb-3 mt-2">
+                        <span class="me-4 d-flex align-items-center">
+                          <i class="ni ni-calendar-grid-58 me-2"></i> {{ post.post_date }}
+                        </span>
+                        <span class="me-4 d-flex align-items-center">
+                          <i class="ni ni-single-02 me-2"></i> {{ post.user.username }}
+                        </span>
+                        <span class="d-flex align-items-center mt-2 mt-sm-0">
+                          <i class="ni ni-pin-3 me-2"></i>
+                          {% for district in post.districts.all %}
+                            <span class="badge badge-sm bg-gradient-info me-1">{{ district.name }}</span>
+                          {% empty %}
+                            <span class="badge badge-sm bg-gradient-secondary me-1">Global</span>
+                          {% endfor %}
+                        </span>
+                      </div>
+                      
+
+                      <div class="text-sm text-body">
+                        {{ post.text|truncatewords_html:15|safe }}
+                      </div>
+                      
+
+                      {% if not forloop.last %}
+                        <hr class="horizontal dark mt-4">
+                      {% endif %}
+                      
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="alert alert-light text-center mt-3" role="alert">
+                  <span class="text-sm"><strong>No posts found!</strong> There are no posts yet in the system.</span>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}
