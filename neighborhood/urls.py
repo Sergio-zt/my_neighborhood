@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (
+from neighborhood.views import (
     index,
     UserListView,
     UserDetailView,
