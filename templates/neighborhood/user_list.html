@@ -1,47 +1,133 @@
 {% extends "base.html" %}
+{% load static %}
 {% load crispy_forms_filters %}
 
+{% block title %} Neighbor Profile {% endblock title %}
+
+{% block body_class %} neighbor-detail-page {% endblock body_class %}
+
 {% block content %}
-    <h1>
-      Neighbors List
-      <a href="{% url 'neighborhood:user-create' %}" class="btn btn-primary link-to-page">
-        Create
-      </a>
-    </h1>
+  {% include "includes/navigation.html" %}
 
-    <form method="GET" action="" class="form-inline">
-      {{ search_form|crispy }}
-      <input type="submit" value="🔍" class="btn btn-secondary">
-    </form>
 
-    {% if user_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Districts</th>
-      </tr>
-    {% for user in user_list %}
-      <tr>
-        <td>{{ user.id }}</td>
-        <td><a href="{{ user.get_absolute_url }}">{{ user.username }} {% if user == request.user %} (Me){% endif %}</a></td>
-        <td>{{ user.first_name }}</td>
-        <td>{{ user.last_name }}</td>
-        <td>
-          {% for district in user.districts.all %}
-            <a href="{% url "neighborhood:district-update" pk=district.id %}">{{ district.name }}</a>
-            {% if not forloop.last %}, {% endif %}
-            {% empty %}
-              User not belong to any district
-          {% endfor %}
-        </td>
-      </tr>
-    {% endfor %}
+  <header class="header-2">
 
-    </table>
-    {% else %}
-      <p>There are no neighbors in the service.</p>
-    {% endif %}
-{% endblock %}
+    <div class="page-header section-height-50 relative" style="background-image: url('{% static "assets/img/curved-images/curved.jpg" %}')">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 text-center mx-auto">
+            <h1 class="text-white pt-3 mt-n5">Neighbors List</h1>
+            <p class="lead text-white mt-3">Search and manage all neighbors in the system.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="position-absolute w-100 z-index-1 bottom-0">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 40" preserveAspectRatio="none" shape-rendering="auto">
+          <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+          </defs>
+          <g class="moving-waves">
+            <use xlink:href="#gentle-wave" x="48" y="-1" fill="rgba(255,255,255,0.40" />
+            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.35)" />
+            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.25)" />
+            <use xlink:href="#gentle-wave" x="48" y="8" fill="rgba(255,255,255,0.20)" />
+            <use xlink:href="#gentle-wave" x="48" y="13" fill="rgba(255,255,255,0.15)" />
+            <use xlink:href="#gentle-wave" x="48" y="16" fill="rgba(255,255,255,0.95" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+
+  <section class="pt-3 pb-5">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-12 z-index-2 mt-n10 mx-auto">
+          <div class="card blur shadow-blur">
+            
+
+            <div class="card-header bg-transparent pb-0 p-4 d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">All Neighbors</h5>
+              <a href="{% url 'neighborhood:user-create' %}" class="btn bg-gradient-primary btn-sm mb-0">
+                + Create
+              </a>
+            </div>
+
+            <div class="card-body p-4 pt-2">
+              
+
+              <form method="GET" action="" class="row gx-3 gy-2 align-items-center mb-4">
+                <div class="col-md-9 col-lg-10">
+                  {{ search_form|crispy }}
+                </div>
+                <div class="col-md-3 col-lg-2">
+                  <button type="submit" class="btn btn-secondary w-100 mb-0 mt-md-0 mt-2">
+                    Search
+                  </button>
+                </div>
+              </form>
+
+
+              {% if user_list %}
+                <div class="table-responsive">
+                  <table class="table align-items-center mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Username</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">First Name</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Last Name</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Districts</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for user in user_list %}
+                        <tr>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0 px-3">{{ user.id }}</p>
+                          </td>
+                          <td>
+                            <a href="{{ user.get_absolute_url }}" class="text-sm font-weight-bold text-primary mb-0">
+                              {{ user.username }}
+                            </a>
+                            {% if user == request.user %}
+                              <span class="badge badge-sm bg-gradient-success ms-2">Me</span>
+                            {% endif %}
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">{{ user.first_name }}</p>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">{{ user.last_name }}</p>
+                          </td>
+                          <td>
+                            {% for district in user.districts.all %}
+                              <a href="{% url 'neighborhood:district-update' pk=district.id %}" class="badge badge-sm bg-gradient-info text-white text-xs mb-1">
+                                {{ district.name }}
+                              </a>
+                            {% empty %}
+                              <span class="text-secondary text-xs">No districts</span>
+                            {% endfor %}
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              {% else %}
+                <div class="alert alert-light text-center mt-3" role="alert">
+                  <strong>No results!</strong> There are no neighbors in the service yet.
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

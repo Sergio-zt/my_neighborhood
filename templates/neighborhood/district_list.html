@@ -1,75 +1,142 @@
 {% extends "base.html" %}
-{% load crispy_forms_filters %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Districts List {% endblock title %}
+
+{% block body_class %} districts-page {% endblock body_class %}
 
 {% block content %}
-  <h1>
-    Districts List
-    <a href="{% url 'neighborhood:district-create' %}" class="btn btn-primary link-to-page">
-      Create
-    </a>
-  </h1>
+  {% include "includes/navigation.html" %}
 
-  <form method="GET" action="" class="form-inline">
-      {{ search_form|crispy }}
-      <input type="submit" value="🔍" class="btn btn-secondary">
-  </form>
 
-  {% if district_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Neighbors</th>
-        <th>Membership</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
+  <header class="header-2">
+    <div class="page-header section-height-50 relative" style="background-image: url('{% static "assets/img/curved-images/curved.jpg" %}')">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 text-center mx-auto">
+            <h1 class="text-white pt-3 mt-n5">Districts List</h1>
+            <p class="lead text-white mt-3">Manage and explore all districts in your neighborhood system.</p>
+          </div>
+        </div>
+      </div>
 
-      {% for district in district_list %}
-        <tr>
-          <td>
-              {{ district.id }}
-          </td>
-          <td>
-              {{ district.name }}
-          </td>
-          <td>
-              {{ district.user_count }}
-          </td>
-          <td>
-            <form action="{% url 'neighborhood:toggle-district-membership' pk=district.id %}" method="POST">
-              {% csrf_token %}
+      <div class="position-absolute w-100 z-index-1 bottom-0">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 40" preserveAspectRatio="none" shape-rendering="auto">
+          <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+          </defs>
+          <g class="moving-waves">
+            <use xlink:href="#gentle-wave" x="48" y="-1" fill="rgba(255,255,255,0.40)" />
+            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.35)" />
+            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.25)" />
+            <use xlink:href="#gentle-wave" x="48" y="8" fill="rgba(255,255,255,0.20)" />
+            <use xlink:href="#gentle-wave" x="48" y="13" fill="rgba(255,255,255,0.15)" />
+            <use xlink:href="#gentle-wave" x="48" y="16" fill="rgba(255,255,255,0.95)" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+
+  <section class="pt-3 pb-5">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-12 col-lg-10 z-index-2 mt-n10 mx-auto">
+          <div class="card blur shadow-blur">
+            
+
+            <div class="card-header bg-transparent pb-0 p-4 d-flex justify-content-between align-items-center flex-wrap">
+              <h5 class="mb-0">All Districts</h5>
+              <a href="{% url 'neighborhood:district-create' %}" class="btn bg-gradient-primary btn-sm mb-0 mt-2 mt-md-0">
+                + Create
+              </a>
+            </div>
+
+            <div class="card-body p-4 pt-2">
               
-              <!-- Проверяем, есть ли текущий пользователь в списке пользователей этого района -->
-              {% if request.user in district.users.all %}
-                <!-- Если да, показываем кнопку отсоединиться -->
-                <button type="submit" class="btn btn-warning btn-sm">
-                  Leave
-                </button>
-              {% else %}
-                <!-- Если нет, показываем кнопку присоединиться -->
-                <button type="submit" class="btn btn-success btn-sm">
-                  Join
-                </button>
-              {% endif %}
-            </form>
-          </td>
-          <td>
-              <a href="{% url "neighborhood:district-update" pk=district.id %}">
-                Update
-              </a>
-            </td>
-            <td>
-              <a style="color: red"
-                href="{% url 'neighborhood:district-delete' pk=district.id %}">
-                Delete
-              </a>
-            </td>
-        </tr>
-      {% endfor %}
-    </table>
 
-  {% else %}
-      <p>There are no districts.</p>
-  {% endif %}
-{% endblock %}
+              <form method="GET" action="" class="row gx-3 gy-2 align-items-center mb-4">
+                <div class="col-md-9 col-lg-10">
+                  {{ search_form|crispy }}
+                </div>
+                <div class="col-md-3 col-lg-2">
+                  <button type="submit" class="btn btn-secondary w-100 mb-0 mt-md-0 mt-2">
+                    Search
+                  </button>
+                </div>
+              </form>
+
+
+              {% if district_list %}
+                <div class="table-responsive">
+                  <table class="table align-items-center mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Neighbors</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Membership</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for district in district_list %}
+                        <tr>
+
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0 px-3">{{ district.id }}</p>
+                          </td>
+
+                          <td>
+                            <p class="text-sm font-weight-bold text-dark mb-0">{{ district.name }}</p>
+                          </td>
+
+                          <td class="align-middle text-center text-sm">
+                            <span class="badge badge-sm bg-gradient-info">{{ district.user_count }}</span>
+                          </td>
+
+                          <td class="align-middle text-center">
+                            <form action="{% url 'neighborhood:toggle-district-membership' pk=district.id %}" method="POST" class="m-0">
+                              {% csrf_token %}
+                              {% if request.user in district.users.all %}
+                                <button type="submit" class="btn bg-gradient-warning btn-sm mb-0 px-3">
+                                  Leave
+                                </button>
+                              {% else %}
+                                <button type="submit" class="btn bg-gradient-success btn-sm mb-0 px-3">
+                                  Join
+                                </button>
+                              {% endif %}
+                            </form>
+                          </td>
+
+                          <td class="align-middle text-center">
+                            <a href="{% url 'neighborhood:district-update' pk=district.id %}" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit district">
+                              Edit
+                            </a>
+                            <a href="{% url 'neighborhood:district-delete' pk=district.id %}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete district">
+                              Delete
+                            </a>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              {% else %}
+                <div class="alert alert-light text-center mt-3" role="alert">
+                  <span class="text-sm"><strong>No districts found!</strong> There are currently no districts in the system.</span>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

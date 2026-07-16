@@ -11,7 +11,7 @@ from .models import(
 class UserCreationForm(UserCreationForm):
     districts = forms.ModelMultipleChoiceField(
         queryset=District.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
     )
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
