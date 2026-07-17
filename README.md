@@ -23,7 +23,7 @@ Follow these steps to get the project running on your local machine.
 
 ### 1. Clone the repository
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/Sergio-zt/my_neighborhood.git
 cd my_neighborhood
 ```
 
