@@ -33,16 +33,16 @@
                   {% endif %}
 
                   <div class="mb-3">
-                    <input type="text" name="username" class="form-control form-control-lg" placeholder="Username" aria-label="Username" required id="{{ form.username.id_for_label }}">
+                    <input type="text" name="username" class="form-control form-control-lg" placeholder="Username" aria-label="Username" value="{{ user.username }}" required id="{{ form.username.id_for_label }}">
                     {% if form.username.errors %}<div class="text-danger text-sm mt-1">{{ form.username.errors.0 }}</div>{% endif %}
                   </div>
 
                   <div class="mb-3">
-                    <input type="text" name="first_name" class="form-control form-control-lg" placeholder="First Name" aria-label="First Name" id="{{ form.first_name.id_for_label }}">
+                    <input type="text" name="first_name" class="form-control form-control-lg" placeholder="First Name" aria-label="First Name" value="{{ user.first_name }}" id="{{ form.first_name.id_for_label }}">
                   </div>
 
                   <div class="mb-3">
-                    <input type="text" name="last_name" class="form-control form-control-lg" placeholder="Last Name" aria-label="Last Name" id="{{ form.last_name.id_for_label }}">
+                    <input type="text" name="last_name" class="form-control form-control-lg" placeholder="Last Name" aria-label="Last Name" value="{{ user.last_name }}" id="{{ form.last_name.id_for_label }}">
                   </div>
                   <div class="mb-3">
                     <input type="password" name="password1" class="form-control form-control-lg" placeholder="Password" aria-label="Password" required id="{{ form.password1.id_for_label }}">
@@ -71,7 +71,7 @@
                     </label>
                   </div>
                   <div class="text-center">
-                    <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Register</button>
+                    <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">{{ object|yesno:"Update,Register" }}</button>
                   </div>
                 </form>
               </div>

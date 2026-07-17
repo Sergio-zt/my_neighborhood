@@ -26,7 +26,7 @@
           </a>
         </li>
         <li class="nav-item mx-2">
-          <a class="nav-link ps-2 cursor-pointer align-items-center" href="{% url 'neighborhood:user-list' %}">
+          <a class="nav-link ps-2 cursor-pointer align-items-center" href="{% url 'users:user-list' %}">
             All neighbors
           </a>
         </li>
@@ -36,7 +36,7 @@
           </a>
         </li>
         <li class="nav-item mx-2">
-          <a class="nav-link ps-2 cursor-pointer align-items-center" href="{% url 'neighborhood:post-list' %}">
+          <a class="nav-link ps-2 cursor-pointer align-items-center" href="{% url 'posts:post-list' %}">
             All posts
           </a>
         </li>
@@ -56,7 +56,7 @@
         {% else %}
           <li class="nav-item ms-lg-auto d-flex align-items-center">
             <a class="navbar-brand font-weight-bolder ms-sm-3" href="{% url 'login' %}?next={{request.path}}">Login</a>
-            <a class="navbar-brand font-weight-bolder ms-sm-3" href="{% url 'neighborhood:user-create' %}">Registration</a>
+            <a class="navbar-brand font-weight-bolder ms-sm-3" href="{% url 'users:user-create' %}">Registration</a>
           </li>
         {% endif %}
         
