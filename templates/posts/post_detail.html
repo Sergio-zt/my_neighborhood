@@ -54,10 +54,10 @@
 
               {% if request.user == post.user %}
                 <div class="mt-3 mt-md-0">
-                  <a href="{% url 'neighborhood:post-update' pk=post.id %}" class="btn bg-gradient-info btn-sm mb-0 me-2">
+                  <a href="{% url 'posts:post-update' pk=post.id %}" class="btn bg-gradient-info btn-sm mb-0 me-2">
                     Update
                   </a>
-                  <a href="{% url 'neighborhood:post-delete' pk=post.id %}" class="btn bg-gradient-danger btn-sm mb-0">
+                  <a href="{% url 'posts:post-delete' pk=post.id %}" class="btn bg-gradient-danger btn-sm mb-0">
                     Delete
                   </a>
                 </div>
@@ -94,7 +94,7 @@
           
 
           <div class="mt-4 text-center">
-            <a href="{% url 'neighborhood:post-list' %}" class="btn btn-outline-secondary">
+            <a href="{% url 'posts:post-list' %}" class="btn btn-outline-secondary">
               <i class="ni ni-bold-left me-2"></i> Back to all posts
             </a>
           </div>

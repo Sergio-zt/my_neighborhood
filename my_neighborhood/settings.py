@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "crispy_bootstrap4",
     "crispy_forms",
     "neighborhood",
+    "users",
+    "posts"
 ]
 
 MIDDLEWARE = [
@@ -107,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = "neighborhood.User"
+AUTH_USER_MODEL = "users.User"
 
 LOGIN_REDIRECT_URL = "/"
 

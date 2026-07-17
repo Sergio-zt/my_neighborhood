@@ -52,10 +52,10 @@
             <div class="card-header bg-transparent pb-0 p-4 d-flex justify-content-between align-items-center flex-wrap">
               <h4 class="mb-0 text-primary">@{{ user.username }}</h4>
               <div class="mt-2 mt-md-0">
-                <a href="{% url 'neighborhood:user-update' pk=user.id %}" class="btn bg-gradient-info btn-sm mb-0 me-2">
+                <a href="{% url 'users:user-update' pk=user.id %}" class="btn bg-gradient-info btn-sm mb-0 me-2">
                   Update
                 </a>
-                <a href="{% url 'neighborhood:user-delete' pk=user.id %}" class="btn bg-gradient-danger btn-sm mb-0">
+                <a href="{% url 'users:user-delete' pk=user.id %}" class="btn bg-gradient-danger btn-sm mb-0">
                   Delete
                 </a>
               </div>
