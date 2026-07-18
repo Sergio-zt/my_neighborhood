@@ -1,10 +1,8 @@
-from django.shortcuts import render
-from users.models import User
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
-from users.forms import(
+from users.forms import (
     UserSearchForm,
     UserCreationForm,
     UserUpdateForm
@@ -37,7 +35,7 @@ class UserListView(LoginRequiredMixin, generic.ListView):
 
 class UserDetailView(LoginRequiredMixin, generic.DetailView):
     model = get_user_model()
-    
+
     def get_queryset(self):
         return super().get_queryset().prefetch_related("districts")
 

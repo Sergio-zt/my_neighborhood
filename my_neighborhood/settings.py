@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +26,7 @@ SECRET_KEY = "django-insecure-bdd0y*^0^x6zxw)sejoh2ab+xfwbe#bw@3vpi34i#+q5xt9#i6
 DEBUG = True
 
 # Assets Management
-ASSETS_ROOT = "/static/assets" 
+ASSETS_ROOT = "/static/assets"
 
 ALLOWED_HOSTS = []
 

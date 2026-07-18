@@ -1,11 +1,10 @@
-from django.shortcuts import render
-from posts.models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
-from posts.forms import(
+from posts.models import Post
+from posts.forms import (
     PostSearchForm,
-    PostCreationForm,    
+    PostCreationForm
 )
 
 
@@ -45,7 +44,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy("posts:post-list")
 
     def form_valid(self, form):
-        form.instance.user = self.request.user        
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
 

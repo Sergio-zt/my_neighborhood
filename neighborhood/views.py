@@ -1,10 +1,8 @@
 from django.db.models import Count
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_POST
@@ -13,7 +11,7 @@ from posts.models import Post
 
 from neighborhood.models import District
 
-from .forms import (
+from neighborhood.forms import (
     DistrictSearchForm,
 )
 
@@ -61,7 +59,7 @@ class DistrictListView(LoginRequiredMixin, generic.ListView):
         if form.is_valid():
             return queryset.filter(name__icontains=form.cleaned_data["name"])
         return queryset
-    
+
     @require_POST
     def toggle_district_membership(request, pk):
         district = get_object_or_404(District, pk=pk)

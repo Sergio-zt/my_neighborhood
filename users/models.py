@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from neighborhood.models import District
 from django.urls import reverse
 
+
 class User(AbstractUser):
     districts = models.ManyToManyField(
         District,

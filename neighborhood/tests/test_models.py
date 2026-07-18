@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
-from neighborhood.models import Post, District
+from neighborhood.models import District
+from posts.models import Post
 
 
 class ModelsTests(TestCase):
@@ -45,8 +46,6 @@ class ModelsTests(TestCase):
         post.districts.add(district)
 
         self.assertEqual(Post.objects.count(), 1)
-
-
         saved_post = Post.objects.get(id=post.id)
         self.assertEqual(saved_post.title, "Post_Title")
         self.assertEqual(saved_post.text, "Post Text")

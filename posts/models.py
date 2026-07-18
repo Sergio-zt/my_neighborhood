@@ -2,9 +2,10 @@ from django.db import models
 from django.conf import settings
 from neighborhood.models import District
 
+
 class Post(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, 
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="posts"
     )

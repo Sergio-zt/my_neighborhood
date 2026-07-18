@@ -22,7 +22,6 @@ class PostCreationForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
     )
 
-    
     class Meta:
         model = Post
         fields = [
