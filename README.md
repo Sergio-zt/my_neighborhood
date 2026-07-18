@@ -53,7 +53,7 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-### BD structure diagram
+### DB structure diagram
 ![DB](docs/screenshots/DB_Diagram.png)
 
 ### 1. Main Dashboard / Post Feed
