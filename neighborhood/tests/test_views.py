@@ -1,11 +1,12 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from neighborhood.models import Post, District
+from neighborhood.models import District
+from posts.models import Post
 
 
 DISTRICT_URL = reverse("neighborhood:district-list")
-POSTS_URL = reverse("neighborhood:post-list")
+POSTS_URL = reverse("posts:post-list")
 
 
 class PublicDistrictTest(TestCase):
@@ -20,7 +21,7 @@ class PublicPostTest(TestCase):
         self.assertNotEqual(res.status_code, 200)
 
     def test_login_detail_required(self):
-        res = self.client.get(reverse("neighborhood:post-detail", args=(1,)))
+        res = self.client.get(reverse("posts:post-detail", args=(1,)))
         self.assertNotEqual(res.status_code, 200)
 
 
@@ -49,7 +50,7 @@ class PrivateUserTest(TestCase):
 
     def test_retrive_user_detail(self):
         response = self.client.get(
-            reverse("neighborhood:user-detail", args=(self.user.pk,))
+            reverse("users:user-detail", args=(self.user.pk,))
         )
         user = get_user_model().objects.get(pk=self.user.pk,)
         self.assertEqual(response.status_code, 200)
@@ -95,7 +96,7 @@ class PrivatePostTest(TestCase):
 
     def test_retrive_post_detail(self):
         response = self.client.get(
-            reverse("neighborhood:post-detail", args=(self.post.pk,))
+            reverse("posts:post-detail", args=(self.post.pk,))
         )
         post = Post.objects.get(id=self.post.pk)
         self.assertEqual(response.status_code, 200)

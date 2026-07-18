@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
-from neighborhood.models import Post, District
+from neighborhood.models import District
+from posts.models import Post
 
 
 class ModelsTests(TestCase):

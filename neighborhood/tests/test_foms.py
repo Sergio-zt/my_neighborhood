@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from neighborhood.models import District, Post
+from neighborhood.models import District
+from posts.models import Post
 
 
 class DistrictSearchTests(TestCase):
@@ -45,7 +46,7 @@ class PostSearchTests(TestCase):
     def setUp(self):
         self.title = "test_title"
         self.text = "Test post text"
-        self.url = reverse("neighborhood:post-list")
+        self.url = reverse("posts:post-list")
         self.district = District.objects.create(
             name="Test_Name",
         )
