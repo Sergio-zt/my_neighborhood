@@ -1,8 +1,7 @@
-from django.shortcuts import render
-from posts.models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
+from posts.models import Post
 from posts.forms import(
     PostSearchForm,
     PostCreationForm,    
