@@ -9,6 +9,7 @@ class UserCreationForm(UserCreationForm):
         queryset=District.objects.all(),
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
     )
+
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
         fields = UserCreationForm.Meta.fields + (
@@ -23,6 +24,7 @@ class UserUpdateForm(forms.ModelForm):
         queryset=District.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
+
     class Meta():
         model = get_user_model()
         fields = [

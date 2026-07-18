@@ -1,5 +1,5 @@
 from django.urls import path
-from posts.views import(
+from posts.views import (
     PostListView,
     PostDetailView,
     PostDeleteView,

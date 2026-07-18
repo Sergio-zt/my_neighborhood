@@ -59,7 +59,7 @@ class DistrictListView(LoginRequiredMixin, generic.ListView):
         if form.is_valid():
             return queryset.filter(name__icontains=form.cleaned_data["name"])
         return queryset
-    
+
     @require_POST
     def toggle_district_membership(request, pk):
         district = get_object_or_404(District, pk=pk)
