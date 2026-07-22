@@ -4,7 +4,7 @@ from my_neighborhood.settings.base import *
 # For development settings, keep DEBUG turned ON explicitly.
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
