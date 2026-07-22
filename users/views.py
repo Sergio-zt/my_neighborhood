@@ -4,7 +4,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from users.forms import (
     UserSearchForm,
-    UserCreationForm,
+    UsersCreationForm,
     UserUpdateForm
 )
 
@@ -40,7 +40,7 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
         return super().get_queryset().prefetch_related("districts")
 
 
-class UserUpdeteView(LoginRequiredMixin, generic.UpdateView):
+class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = get_user_model()
     form_class = UserUpdateForm
 
@@ -51,5 +51,5 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class UserCreateView(generic.CreateView):
     model = get_user_model()
-    form_class = UserCreationForm
+    form_class = UsersCreationForm
     success_url = reverse_lazy("neighborhood:user-list")
