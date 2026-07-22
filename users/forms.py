@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from neighborhood.models import District
 
 
-class UserCreationForm(UserCreationForm):
+class UsersCreationForm(UserCreationForm):
     districts = forms.ModelMultipleChoiceField(
         queryset=District.objects.all(),
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
@@ -19,7 +19,7 @@ class UserCreationForm(UserCreationForm):
         )
 
 
-class UserUpdateForm(forms.ModelForm):
+class UserUpdateForm(UserChangeForm):
     districts = forms.ModelMultipleChoiceField(
         queryset=District.objects.all(),
         widget=forms.CheckboxSelectMultiple,
