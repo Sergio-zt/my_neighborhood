@@ -43,8 +43,8 @@
 
         {% if user.is_authenticated %}
           <li class="nav-item ms-lg-auto d-flex align-items-center">
-            <a class="nav-link me-2 mb-0" href="{{ user.get_absolute_url }}">
-              {{ user.get_username }}
+            <a class="nav-link me-2 mb-0" href="{{ request.user.get_absolute_url }}">
+              {{ request.user.get_username }}
             </a>
             <form action="{% url "logout" %}" method="post" class="m-0 d-flex align-items-center">
               {% csrf_token %}
