@@ -52,4 +52,4 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
 class UserCreateView(generic.CreateView):
     model = get_user_model()
     form_class = UsersCreationForm
-    success_url = reverse_lazy("neighborhood:user-list")
+    success_url = reverse_lazy("users:user-list")
