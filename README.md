@@ -17,6 +17,13 @@ Neighborhood News System (also known as Neighborhood Portal) is a Django-based w
 * **Database:** SQLite (default)
 * **Integrations:** TinyMCE (Rich Text Editor)
 
+## Deployed Project
+https://neighborhood-ngnq.onrender.com/
+## Test User
+- Login: user
+- Password: user12345
+
+
 ## Setup Instructions
 
 Follow these steps to get the project running on your local machine.
